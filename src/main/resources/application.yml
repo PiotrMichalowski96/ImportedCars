@@ -1,0 +1,16 @@
+camel:
+  springboot:
+    main-run-controller: true
+deadLetterHandleNewException: true
+
+cepik:
+  webservice:
+    connectionTimeout: 500000
+    url: https://api.cepik.gov.pl/pojazdy?wojewodztwo={wojewodztwo}&data-od={data}
+
+route:
+  input: file:/C:/NO/input/
+  output: file:/C:/NO/output/
+  error: file:/C:/NO/output/error/
+  chunkSize: 100
+  timeout: 5000
