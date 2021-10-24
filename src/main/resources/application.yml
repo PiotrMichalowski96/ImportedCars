@@ -9,8 +9,8 @@ cepik:
     url: https://api.cepik.gov.pl/pojazdy?wojewodztwo={wojewodztwo}&data-od={data}&page={page}&tylko-zarejestrowane=true&pokaz-wszystkie-pola=true
 
 route:
-  input: file:/C:/NO/input/
-  output: file:/C:/NO/output/
-  error: file:/C:/NO/output/error/
+  input: file:/C:/ImportedCars/input/ #Folder imitates MQ Object
+  output: file:/C:/ImportedCars/output/ #Folder imitates MQ Object
+  error: file:/C:/ImportedCars/output/error/ #Folder imitates MQ Object
   chunkSize: 100
   timeout: 5000
