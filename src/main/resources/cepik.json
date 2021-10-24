@@ -1374,7 +1374,7 @@
           "description": "Data pierwszej rejestracji.",
           "type": "string"
         },
-        "data-pierwszej-rejestracjiwkraju": {
+        "data-pierwszej-rejestracji-w-kraju": {
           "description": "Data pierwszej rejestracji w kraju.",
           "type": "string"
         },

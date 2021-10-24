@@ -12,7 +12,7 @@ public interface CepikResponseToCarMapper extends MapperMethods {
 
   @Mapping(target = "brand", source = "attributes.marka")
   @Mapping(target = "model", source = "attributes.model")
-  @Mapping(target = "firstRegistrationDate", source = "attributes.dataOstatniejRejestracjiWKraju", qualifiedBy = CepikDateToLocalDateMapper.class)
+  @Mapping(target = "firstRegistrationDate", source = "attributes.dataPierwszejRejestracjiWKraju", qualifiedBy = CepikDateToLocalDateMapper.class)
   Car toCar(ApiAttributesDtoVehicle attributesDtoVehicle);
 
   List<Car> toCarList(List<ApiAttributesDtoVehicle> apiAttributesDtoVehicleList);
