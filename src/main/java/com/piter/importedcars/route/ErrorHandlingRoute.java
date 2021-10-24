@@ -1,5 +1,9 @@
 package com.piter.importedcars.route;
 
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_ERROR_HANDLING;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_MARSHALLING_ERROR_RESPONSE;
+import static com.piter.importedcars.route.common.RouteLogMessages.stepDoneMessage;
+
 import com.piter.importedcars.processor.ErrorHandlingProcessor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class ErrorHandlingRoute extends RouteBuilder {
 
   private static final String ROUTE_ID = "error-handling-route";
-  static final String ERROR_DIRECT_URI = "direct:error";
+  static final String ERROR_DIRECT_URI = "direct:error-handling";
 
   @Value("${route.error}")
   private final String errorOutputUri;
@@ -29,12 +33,12 @@ public class ErrorHandlingRoute extends RouteBuilder {
         .setExchangePattern(ExchangePattern.InOnly)
 
         .bean(errorHandlingProcessor)
-        .id("Error processing")
-        .log(LoggingLevel.INFO, logger, "Error processing")
+        .id(STEP_ERROR_HANDLING)
+        .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_ERROR_HANDLING))
 
-//        .marshal().json()
-//        .id("Marshalling")
-//        .log(LoggingLevel.INFO, logger, "Marshalling")
+        .marshal().json()
+        .id(STEP_MARSHALLING_ERROR_RESPONSE)
+        .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_MARSHALLING_ERROR_RESPONSE))
 
         .to(errorOutputUri);
   }

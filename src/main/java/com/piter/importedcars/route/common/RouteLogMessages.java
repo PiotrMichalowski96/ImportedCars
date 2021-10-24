@@ -12,6 +12,8 @@ public class RouteLogMessages {
     public static final String STEP_MAPPING_CEPIK_RESPONSE = "Mapping cepik response to car objects";
     public static final String STEP_CREATING_CARS_REPORT = "Creating import cars report";
     public static final String STEP_MARSHALLING_CARS_REPORT = "Marshalling cars report to json";
+    public static final String STEP_ERROR_HANDLING = "Error handling";
+    public static final String STEP_MARSHALLING_ERROR_RESPONSE = "Marshalling error response";
 
     public static String readFrom(String inputUri) {
         StringBuilder sb = new StringBuilder();

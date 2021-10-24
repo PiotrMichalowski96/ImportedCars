@@ -47,7 +47,7 @@ public class ImportedCarsRoute extends RouteBuilder {
   @Override
   public void configure() throws Exception {
 
-    errorHandler(deadLetterChannel("direct:error-handling-route"));
+    errorHandler(deadLetterChannel(ErrorHandlingRoute.ERROR_DIRECT_URI));
 
     from(inputUri)
         .routeId(ROUTE_ID)
