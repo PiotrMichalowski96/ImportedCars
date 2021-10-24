@@ -1,9 +1,8 @@
 package com.piter.importedcars.processor;
 
+import static com.piter.importedcars.util.JsonResourceUtil.parseInputJsonFile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.piter.importedcars.mapper.CepikResponseToCarMapperImpl;
 import com.piter.importedcars.mapper.MapperMethods;
 import com.piter.importedcars.model.Car;
@@ -11,8 +10,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import pl.cepik.model.JsonApiForListVehicle;
 import pl.cepik.model.VehicleDto;
 
@@ -41,14 +38,6 @@ public class CepikResponseToCarsMappingProcessorTest {
     assertCarIsEqualToVehicleDto(carList.get(2), cepikResponse2.getData().get(0).getAttributes());
     assertCarIsEqualToVehicleDto(carList.get(3), cepikResponse2.getData().get(1).getAttributes());
     assertCarIsEqualToVehicleDto(carList.get(4), cepikResponse2.getData().get(2).getAttributes());
-  }
-
-  private JsonApiForListVehicle parseInputJsonFile(String fileName) throws IOException {
-    String pathToJson = String.format("samples/%s", fileName);
-    Resource pathResource = new ClassPathResource(pathToJson);
-    ObjectMapper mapper = new ObjectMapper();
-    mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    return mapper.readValue(pathResource.getFile(), JsonApiForListVehicle.class);
   }
 
   private void assertCarIsEqualToVehicleDto(Car car, VehicleDto vehicleDto) {

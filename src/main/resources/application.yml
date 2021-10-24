@@ -6,7 +6,7 @@ deadLetterHandleNewException: true
 cepik:
   webservice:
     connectionTimeout: 500000
-    url: https://api.cepik.gov.pl/pojazdy?wojewodztwo={wojewodztwo}&data-od={data}
+    url: https://api.cepik.gov.pl/pojazdy?wojewodztwo={wojewodztwo}&data-od={data}&page={page}&tylko-zarejestrowane=true&pokaz-wszystkie-pola=true
 
 route:
   input: file:/C:/NO/input/
