@@ -16,9 +16,10 @@ public class FilterCars {
     return exchange -> {
       SearchParameters searchParameters = exchange.getProperty(SEARCH_PROPERTIES, SearchParameters.class);
       List<Car> cars = exchange.getIn().getBody(List.class);
-      return cars.stream()
+      boolean containSearchParams = cars.stream()
           .map(Car::getBrand)
-          .anyMatch(brand ->  !StringUtils.equalsIgnoreCase(brand, searchParameters.getCarBrand()));
+          .anyMatch(brand ->  StringUtils.equalsIgnoreCase(brand, searchParameters.getCarBrand()));
+      return !containSearchParams;
     };
   }
 
