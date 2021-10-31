@@ -1,16 +1,24 @@
 package com.piter.importedcars.route;
 
-import static com.piter.importedcars.route.common.RouteLogMessages.*;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_CREATING_CARS_REPORT;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_MAPPING_CEPIK_RESPONSE;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_MAPPING_SEARCH_PARAMS;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_MARSHALLING_CARS_REPORT;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_REST_INVOCATION;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_SETTING_SEARCH_PROPERTIES;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_START_BASE_ROUTE;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_UNMARSHALLING;
+import static com.piter.importedcars.route.common.RouteLogMessages.STOP_PROCESSING_NO_SEARCH_PARAMS;
 import static com.piter.importedcars.route.common.RouteLogMessages.stepDoneMessage;
 
 import com.piter.importedcars.aggregation.CarCorrelationKey;
 import com.piter.importedcars.model.SearchParameters;
 import com.piter.importedcars.processor.CepikResponseToCarsMappingProcessor;
 import com.piter.importedcars.processor.ImportCarsReportProcessor;
-import com.piter.importedcars.util.FilterCars;
 import com.piter.importedcars.processor.SearchParamsToCepikParamsMappingProcessor;
 import com.piter.importedcars.processor.SettingSearchPropertiesProcessor;
 import com.piter.importedcars.rest.RestInvocationProcessor;
+import com.piter.importedcars.util.FilterCars;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.ExchangePattern;
@@ -77,11 +85,15 @@ public class ImportedCarsRoute extends RouteBuilder {
         .id(STEP_MAPPING_CEPIK_RESPONSE)
         .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_MAPPING_CEPIK_RESPONSE))
 
+        .filter(FilterCars.doesntContainSearchCarBrands())
+          .log(LoggingLevel.WARN, logger, STOP_PROCESSING_NO_SEARCH_PARAMS)
+          .stop()
+        .end()
+
         .split(body())
+        .streaming()
 
         .filter(FilterCars.filterCarsByBrand())
-
-        //TODO: if empty send message
 
         .aggregate(carCorrelationKey, new GroupedBodyAggregationStrategy())
         .completionSize(chunkSize)
