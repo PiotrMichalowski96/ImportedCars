@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 @UtilityClass
 public class FilterCars {
 
-  public static Predicate doesntContainSearchCarBrands() {
+  public static Predicate doesNotContainSearchCarBrands() {
     return exchange -> {
       SearchParameters searchParameters = exchange.getProperty(SEARCH_PROPERTIES, SearchParameters.class);
       List<Car> cars = exchange.getIn().getBody(List.class);

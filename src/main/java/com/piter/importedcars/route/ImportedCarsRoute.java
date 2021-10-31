@@ -85,7 +85,7 @@ public class ImportedCarsRoute extends RouteBuilder {
         .id(STEP_MAPPING_CEPIK_RESPONSE)
         .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_MAPPING_CEPIK_RESPONSE))
 
-        .filter(FilterCars.doesntContainSearchCarBrands())
+        .filter(FilterCars.doesNotContainSearchCarBrands())
           .log(LoggingLevel.WARN, logger, STOP_PROCESSING_NO_SEARCH_PARAMS)
           .stop()
         .end()
