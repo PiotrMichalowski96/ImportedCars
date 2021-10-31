@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Handler;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import pl.cepik.model.ApiLinksDto;
 import pl.cepik.model.JsonApiForListVehicle;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class RestInvocationProcessor {
@@ -38,7 +40,10 @@ public class RestInvocationProcessor {
         .map(this::retrieveMaxPageNumber)
         .orElse(1);
 
+    logger.info("Cepik webservice returns max page numbers: {}", maxPageNumber);
+
     return IntStream.rangeClosed(1, maxPageNumber)
+        .peek(number -> logger.info("Calling Cepik webservice for page number: {}", number))
         .mapToObj(pageNumber -> restTemplate.exchange(url, HttpMethod.GET,null,
             JsonApiForListVehicle.class, districtCode, requestDateFrom, pageNumber))
         .map(ResponseEntity::getBody)
