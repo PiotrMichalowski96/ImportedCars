@@ -8,6 +8,7 @@ import static com.piter.importedcars.route.common.RouteLogMessages.STEP_REST_INV
 import static com.piter.importedcars.route.common.RouteLogMessages.STEP_SETTING_SEARCH_PROPERTIES;
 import static com.piter.importedcars.route.common.RouteLogMessages.STEP_START_BASE_ROUTE;
 import static com.piter.importedcars.route.common.RouteLogMessages.STEP_UNMARSHALLING;
+import static com.piter.importedcars.route.common.RouteLogMessages.STEP_VALIDATION;
 import static com.piter.importedcars.route.common.RouteLogMessages.STOP_PROCESSING_NO_SEARCH_PARAMS;
 import static com.piter.importedcars.route.common.RouteLogMessages.stepDoneMessage;
 
@@ -67,7 +68,8 @@ public class ImportedCarsRoute extends RouteBuilder {
         .id(STEP_UNMARSHALLING)
         .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_UNMARSHALLING))
 
-        //TODO: input data validation
+        .to("bean-validator:validateInputSearchParameters")
+        .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_VALIDATION))
 
         .process(settingSearchPropertiesProcessor)
         .id(STEP_SETTING_SEARCH_PROPERTIES)

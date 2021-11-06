@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.piter.importedcars.validation.SearchFromDateConstraint;
 import java.time.LocalDate;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,10 +18,13 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SearchParameters {
+  @NotBlank
   private String district;
   @JsonFormat(pattern ="yyyy-MM-dd")
   @JsonSerialize(using = LocalDateSerializer.class)
   @JsonDeserialize(using = LocalDateDeserializer.class)
+  @SearchFromDateConstraint
   private LocalDate searchFromDate;
+  @NotBlank
   private String carBrand;
 }

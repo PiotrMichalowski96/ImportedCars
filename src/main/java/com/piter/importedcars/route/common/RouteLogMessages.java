@@ -7,6 +7,7 @@ public class RouteLogMessages {
 
   public static final String STEP_START_BASE_ROUTE = "Start Imported Cars route";
   public static final String STEP_UNMARSHALLING = "Unmarshalling";
+  public static final String STEP_VALIDATION = "Successful validation";
   public static final String STEP_SETTING_SEARCH_PROPERTIES = "Setting search property";
   public static final String STEP_MAPPING_SEARCH_PARAMS = "Mapping search params to cepik params";
   public static final String STEP_REST_INVOCATION = "Rest invocation of Cepik webservice";
