@@ -7,7 +7,9 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.piter.importedcars.validation.SearchFromDateConstraint;
 import java.time.LocalDate;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,6 @@ public class SearchParameters {
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @SearchFromDateConstraint
   private LocalDate searchFromDate;
-  @NotBlank
-  private String carBrand;
+  @NotEmpty
+  private List<@NotBlank String> carBrandList;
 }

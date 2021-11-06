@@ -5,6 +5,7 @@ import static com.piter.importedcars.processor.SettingSearchPropertiesProcessor.
 import com.piter.importedcars.model.Car;
 import com.piter.importedcars.model.SearchParameters;
 import java.util.List;
+import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import org.apache.camel.Predicate;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +19,9 @@ public class FilterCars {
       List<Car> cars = exchange.getIn().getBody(List.class);
       boolean containSearchParams = cars.stream()
           .map(Car::getBrand)
-          .anyMatch(brand ->  StringUtils.equalsIgnoreCase(brand, searchParameters.getCarBrand()));
+          .filter(Objects::nonNull)
+          .anyMatch(brand ->  searchParameters.getCarBrandList().stream()
+              .anyMatch(searchCarBrands -> StringUtils.equalsIgnoreCase(searchCarBrands, brand)));
       return !containSearchParams;
     };
   }
@@ -27,7 +30,8 @@ public class FilterCars {
     return exchange -> {
       SearchParameters searchParameters = exchange.getProperty(SEARCH_PROPERTIES, SearchParameters.class);
       Car car = exchange.getIn().getBody(Car.class);
-      return StringUtils.equalsIgnoreCase(car.getBrand(), searchParameters.getCarBrand());
+      return searchParameters.getCarBrandList().stream()
+          .anyMatch(searchCarBrands -> StringUtils.equalsIgnoreCase(searchCarBrands, car.getBrand()));
     };
   }
 }
