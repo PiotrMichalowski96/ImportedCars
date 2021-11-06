@@ -2,7 +2,9 @@ package com.piter.importedcars.processor;
 
 import static com.piter.importedcars.util.JsonResourceUtil.parseInputJsonFile;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
+import com.piter.importedcars.exception.CepikResponseException;
 import com.piter.importedcars.mapper.CepikResponseToCarMapperImpl;
 import com.piter.importedcars.mapper.MapperMethods;
 import com.piter.importedcars.model.Car;
@@ -38,6 +40,18 @@ public class CepikResponseToCarsMappingProcessorTest {
     assertCarIsEqualToVehicleDto(carList.get(2), cepikResponse2.getData().get(0).getAttributes());
     assertCarIsEqualToVehicleDto(carList.get(3), cepikResponse2.getData().get(1).getAttributes());
     assertCarIsEqualToVehicleDto(carList.get(4), cepikResponse2.getData().get(2).getAttributes());
+  }
+
+  @Test
+  public void shouldThrowExceptionIfCepikReponseWithEmptyCarList() {
+    //given
+    JsonApiForListVehicle cepikResponse = new JsonApiForListVehicle();
+    String expectedErrorMessage = "Cepik respond with empty car list";
+
+    //whenThen
+    assertThatCode(() -> processor.process(List.of(cepikResponse)))
+        .isInstanceOf(CepikResponseException.class)
+        .hasMessage(expectedErrorMessage);
   }
 
   private void assertCarIsEqualToVehicleDto(Car car, VehicleDto vehicleDto) {
