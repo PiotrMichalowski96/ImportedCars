@@ -1,17 +1,14 @@
 package com.piter.importedcars.util;
 
+import static com.piter.importedcars.util.ExchangeUtils.createExchange;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.piter.importedcars.model.Car;
 import com.piter.importedcars.model.SearchParameters;
-import com.piter.importedcars.processor.SettingSearchPropertiesProcessor;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Stream;
-import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.support.DefaultExchange;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -74,13 +71,5 @@ public class FilterCarsTest {
         Arguments.of(car, List.of("audi"), true),
         Arguments.of(car, List.of("Ford", "Mercedes"), false)
     );
-  }
-
-  private <T> Exchange createExchange(T body, SearchParameters searchParameters) {
-    CamelContext camelContext = new DefaultCamelContext();
-    Exchange exchange = new DefaultExchange(camelContext);
-    exchange.setProperty(SettingSearchPropertiesProcessor.SEARCH_PROPERTIES, searchParameters);
-    exchange.getIn().setBody(body);
-    return exchange;
   }
 }
