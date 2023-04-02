@@ -26,7 +26,7 @@ public class ErrorHandlingRoute extends RouteBuilder {
   private final ErrorHandlingProcessor errorHandlingProcessor;
 
   @Override
-  public void configure() throws Exception {
+  public void configure() {
 
     from(ERROR_DIRECT_URI)
         .routeId(ROUTE_ID)

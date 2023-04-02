@@ -9,8 +9,8 @@ cepik:
     url: https://api.cepik.gov.pl/pojazdy?wojewodztwo={wojewodztwo}&data-od={data}&page={page}&tylko-zarejestrowane=true&pokaz-wszystkie-pola=true
 
 route:
-  input: file:/C:/ImportedCars/input/ #Folder imitates MQ Object
-  output: file:/C:/ImportedCars/output/ #Folder imitates MQ Object
-  error: file:/C:/ImportedCars/output/error/ #Folder imitates MQ Object
+  input: "file:/C:/ImportedCars/input/" #Folder imitates Message Queue
+  output: "file:/C:/ImportedCars/output/?fileName=#{'$'}{date:now:yyyyMMdd}/CarReport-#{'$'}{header.reportName}.json" #Folder imitates Message Queue
+  error: "file:/C:/ImportedCars/output/error/" #Folder imitates Message Queue
   chunkSize: 100
   timeout: 5000

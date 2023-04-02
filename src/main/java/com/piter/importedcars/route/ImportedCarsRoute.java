@@ -37,8 +37,6 @@ public class ImportedCarsRoute extends RouteBuilder {
 
   private static final String ROUTE_ID = "imported-cars-route";
 
-  private static final String OUTPUT_URI_FILE_NAME = "?fileName=${date:now:yyyyMMdd}/CarReport-${header.reportName}.json";
-
   @Value("${route.input}")
   private final String inputUri;
   @Value("${route.output}")
@@ -56,7 +54,7 @@ public class ImportedCarsRoute extends RouteBuilder {
   private final ImportCarsReportProcessor importCarsReportProcessor;
 
   @Override
-  public void configure() throws Exception {
+  public void configure() {
 
     errorHandler(deadLetterChannel(ErrorHandlingRoute.ERROR_DIRECT_URI));
 
@@ -111,6 +109,6 @@ public class ImportedCarsRoute extends RouteBuilder {
         .id(STEP_MARSHALLING_CARS_REPORT)
         .log(LoggingLevel.INFO, logger, stepDoneMessage(STEP_MARSHALLING_CARS_REPORT))
 
-        .to(outputUri+OUTPUT_URI_FILE_NAME);
+        .to(outputUri);
   }
 }
