@@ -2,7 +2,7 @@ package com.piter.importedcars.processor;
 
 import com.piter.importedcars.mapper.SearchParamsToCepikParamsMapper;
 import com.piter.importedcars.model.SearchParameters;
-import com.piter.importedcars.rest.CepikRequestParams;
+import com.piter.importedcars.rest.model.CepikRequestParams;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.Handler;
 import org.springframework.stereotype.Component;

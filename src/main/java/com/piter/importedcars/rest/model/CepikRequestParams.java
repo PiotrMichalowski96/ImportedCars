@@ -1,4 +1,4 @@
-package com.piter.importedcars.rest;
+package com.piter.importedcars.rest.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

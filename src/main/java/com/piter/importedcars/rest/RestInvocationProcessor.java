@@ -1,6 +1,7 @@
 package com.piter.importedcars.rest;
 
 import com.piter.importedcars.rest.config.CepikWebserviceConfig;
+import com.piter.importedcars.rest.model.CepikRequestParams;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
