@@ -20,8 +20,11 @@ class FilterCarsTest {
   void shouldCheckIfContainsSearchCarBrands(List<Car> carList, List<String> carBrandList,
       boolean expectedResult) {
     //given
-    var searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
-        carBrandList);
+    var searchParameters = SearchParameters.builder()
+        .district("podlaskie")
+        .searchFromDate(LocalDate.now())
+        .carBrandList(carBrandList)
+        .build();
 
     Exchange exchange = createExchange(carList, searchParameters);
 
@@ -34,9 +37,21 @@ class FilterCarsTest {
 
   private static Stream<Arguments> provideCarsAndSearchCarBrandsList() {
     List<Car> carList = List.of(
-        new Car("Audi", "A5", LocalDate.now()),
-        new Car("BMW", "M5", LocalDate.now()),
-        new Car("Audi", "A7", LocalDate.now())
+        Car.builder()
+            .brand("Audi")
+            .model("A5")
+            .firstRegistrationDate(LocalDate.now())
+            .build(),
+        Car.builder()
+            .brand("BMW")
+            .model("M5")
+            .firstRegistrationDate(LocalDate.now())
+            .build(),
+        Car.builder()
+            .brand("Audi")
+            .model("A7")
+            .firstRegistrationDate(LocalDate.now())
+            .build()
     );
 
     return Stream.of(
@@ -51,8 +66,11 @@ class FilterCarsTest {
   void shouldCheckIfCarHasSearchedBrand(Car car, List<String> carBrandList,
       boolean expectedResult) {
     //given
-    var searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
-        carBrandList);
+    var searchParameters = SearchParameters.builder()
+        .district("podlaskie")
+        .searchFromDate(LocalDate.now())
+        .carBrandList(carBrandList)
+        .build();
 
     Exchange exchange = createExchange(car, searchParameters);
 
@@ -64,7 +82,11 @@ class FilterCarsTest {
   }
 
   private static Stream<Arguments> provideOneCarAndSearchCarBrandsList() {
-    var car = new Car("Audi", "A4", LocalDate.now());
+    var car = Car.builder()
+        .brand("Audi")
+        .model("A4")
+        .firstRegistrationDate(LocalDate.now())
+        .build();
 
     return Stream.of(
         Arguments.of(car, List.of("Mercedes", "Audi"), true),
