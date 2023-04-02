@@ -11,13 +11,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class MapperMethodsTest {
+class MapperMethodsTest {
 
   private final MapperMethods mapperMethods = new MapperMethods() {};
 
   @ParameterizedTest
   @MethodSource("provideCepikDateAndLocalDate")
-  public void shouldMapCepikDateToLocalDate(String cepikDate, LocalDate expectedLocalDate) {
+  void shouldMapCepikDateToLocalDate(String cepikDate, LocalDate expectedLocalDate) {
     //given input
     //when
     LocalDate mappedLocalDate = mapperMethods.cepikDateToLocalDateMapper(cepikDate);
@@ -36,7 +36,7 @@ public class MapperMethodsTest {
 
   @ParameterizedTest
   @MethodSource("provideLocalDateAndCepikDate")
-  public void shouldMapLocalDateToCepikDate(LocalDate inputLocalDate, String expectedCepikDate) {
+  void shouldMapLocalDateToCepikDate(LocalDate inputLocalDate, String expectedCepikDate) {
     //given input
     //when
     String mappedCepikDate = mapperMethods.localDateToCepikDateMapper(inputLocalDate);
@@ -53,10 +53,10 @@ public class MapperMethodsTest {
   }
 
   @Test
-  public void shouldMapPolishDistrictNameToCode() {
+  void shouldMapPolishDistrictNameToCode() {
     //given
-    String districtName = "mazowieckie";
-    int expectedCode = 14;
+    var districtName = "mazowieckie";
+    var expectedCode = 14;
 
     //when
     int actualCode = mapperMethods.districtCodeMapper(districtName);
@@ -66,9 +66,9 @@ public class MapperMethodsTest {
   }
 
   @Test
-  public void shouldThrowExceptionBecauseWrongPolishDistrictName() {
+  void shouldThrowExceptionBecauseWrongPolishDistrictName() {
     //given
-    String invalidDistrictName = "AAA";
+    var invalidDistrictName = "AAA";
 
     //whenThen
     assertThatThrownBy(() -> mapperMethods.districtCodeMapper(invalidDistrictName))

@@ -19,7 +19,7 @@ public class ExchangeUtils {
   }
 
   public static <T> Exchange createExchange(T body, SearchParameters searchParameters) {
-    Exchange exchange = createExchange(body);
+    var exchange = createExchange(body);
     exchange.setProperty(SettingSearchPropertiesProcessor.SEARCH_PROPERTIES, searchParameters);
     return exchange;
   }

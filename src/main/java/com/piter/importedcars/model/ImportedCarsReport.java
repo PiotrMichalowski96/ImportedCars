@@ -1,14 +1,10 @@
 package com.piter.importedcars.model;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Value;
 
-@AllArgsConstructor
-@Getter
-@Setter
+@Value
 public class ImportedCarsReport {
-  private SearchParameters searchParameters;
-  private List<Car> carList;
+  SearchParameters searchParameters;
+  List<Car> carList;
 }

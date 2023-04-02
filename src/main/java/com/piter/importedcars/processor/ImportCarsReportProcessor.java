@@ -6,10 +6,8 @@ import com.piter.importedcars.exception.CarReportException;
 import com.piter.importedcars.model.Car;
 import com.piter.importedcars.model.ImportedCarsReport;
 import com.piter.importedcars.model.SearchParameters;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
 import org.apache.commons.lang3.StringUtils;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImportCarsReportProcessor {
 
-  public static final String REPORT_NAME = "reportName";
+  static final String REPORT_NAME = "reportName";
 
   @Handler
   public ImportedCarsReport process(Exchange exchange) {
@@ -32,9 +30,11 @@ public class ImportCarsReportProcessor {
   }
 
   private String retrieveCarBrandFrom(List<Car> carList) {
-    String carBrand = Optional.ofNullable(carList)
-        .orElse(Collections.emptyList())
-        .stream()
+    if (carList == null) {
+      throw new CarReportException("Car list must be provided");
+    }
+
+    String carBrand = carList.stream()
         .filter(Objects::nonNull)
         .map(Car::getBrand)
         .filter(StringUtils::isNotBlank)
@@ -52,7 +52,7 @@ public class ImportCarsReportProcessor {
         .filter(brand -> !StringUtils.equals(brand, carBrand))
         .findAny()
         .ifPresent(brand -> {
-          String errorMessage = String.format("Contains different car brands %s and %s", brand, carBrand);
+          var errorMessage = String.format("Contains different car brands %s and %s", brand, carBrand);
           throw new CarReportException(errorMessage);
         });
   }

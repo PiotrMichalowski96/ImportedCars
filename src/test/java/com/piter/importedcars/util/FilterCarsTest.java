@@ -13,14 +13,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class FilterCarsTest {
+class FilterCarsTest {
 
   @ParameterizedTest
   @MethodSource("provideCarsAndSearchCarBrandsList")
-  public void shouldCheckIfContainsSearchCarBrands(List<Car> carList, List<String> carBrandList,
+  void shouldCheckIfContainsSearchCarBrands(List<Car> carList, List<String> carBrandList,
       boolean expectedResult) {
     //given
-    SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
+    var searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
         carBrandList);
 
     Exchange exchange = createExchange(carList, searchParameters);
@@ -48,10 +48,10 @@ public class FilterCarsTest {
 
   @ParameterizedTest
   @MethodSource("provideOneCarAndSearchCarBrandsList")
-  public void shouldCheckIfCarHasSearchedBrand(Car car, List<String> carBrandList,
+  void shouldCheckIfCarHasSearchedBrand(Car car, List<String> carBrandList,
       boolean expectedResult) {
     //given
-    SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
+    var searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
         carBrandList);
 
     Exchange exchange = createExchange(car, searchParameters);
@@ -64,7 +64,7 @@ public class FilterCarsTest {
   }
 
   private static Stream<Arguments> provideOneCarAndSearchCarBrandsList() {
-    Car car = new Car("Audi", "A4", LocalDate.now());
+    var car = new Car("Audi", "A4", LocalDate.now());
 
     return Stream.of(
         Arguments.of(car, List.of("Mercedes", "Audi"), true),

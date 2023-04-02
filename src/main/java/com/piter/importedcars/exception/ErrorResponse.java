@@ -1,11 +1,9 @@
 package com.piter.importedcars.exception;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Value;
 
-@Getter
-@RequiredArgsConstructor
+@Value
 public class ErrorResponse {
-  private final String exceptionType;
-  private final String message;
+  String exceptionType;
+  String message;
 }
