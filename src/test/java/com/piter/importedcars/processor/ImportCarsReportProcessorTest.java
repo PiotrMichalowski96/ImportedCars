@@ -22,9 +22,21 @@ class ImportCarsReportProcessorTest {
   void shouldSetReportNameProperty() {
     //given
     List<Car> carList = List.of(
-        new Car("Audi", "A5", LocalDate.now()),
-        new Car("Audi", "A6", LocalDate.now()),
-        new Car("Audi", "A7", LocalDate.now())
+        Car.builder()
+            .brand("Audi")
+            .model("A5")
+            .firstRegistrationDate(LocalDate.now())
+            .build(),
+        Car.builder()
+            .brand("Audi")
+            .model("A6")
+            .firstRegistrationDate(LocalDate.now())
+            .build(),
+        Car.builder()
+            .brand("Audi")
+            .model("A7")
+            .firstRegistrationDate(LocalDate.now())
+            .build()
     );
 
     Exchange exchange = createExchangeWithSearchParameter(carList);
@@ -33,7 +45,8 @@ class ImportCarsReportProcessorTest {
 
     //when
     processor.process(exchange);
-    String actualReportName = exchange.getProperty(ImportCarsReportProcessor.REPORT_NAME, String.class);
+    String actualReportName = exchange.getProperty(ImportCarsReportProcessor.REPORT_NAME,
+        String.class);
 
     //then
     assertThat(actualReportName).isEqualTo(expectedReportName);
@@ -54,9 +67,21 @@ class ImportCarsReportProcessorTest {
   void shouldThrowExceptionBecauseCarListContainsDifferentCarBrands() {
     //given
     List<Car> carList = List.of(
-        new Car("Audi", "A5", LocalDate.now()),
-        new Car("BMW", "X5", LocalDate.now()),
-        new Car("Audi", "A7", LocalDate.now())
+        Car.builder()
+            .brand("Audi")
+            .model("A5")
+            .firstRegistrationDate(LocalDate.now())
+            .build(),
+        Car.builder()
+            .brand("BMW")
+            .model("X5")
+            .firstRegistrationDate(LocalDate.now())
+            .build(),
+        Car.builder()
+            .brand("Audi")
+            .model("A7")
+            .firstRegistrationDate(LocalDate.now())
+            .build()
     );
 
     Exchange exchange = createExchangeWithSearchParameter(carList);
@@ -70,8 +95,11 @@ class ImportCarsReportProcessorTest {
   }
 
   private Exchange createExchangeWithSearchParameter(List<Car> carList) {
-    SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
-        List.of("Audi", "Mercedes"));
+    SearchParameters searchParameters = SearchParameters.builder()
+        .district("podlaskie")
+        .searchFromDate(LocalDate.now())
+        .carBrandList(List.of("Audi", "Mercedes"))
+        .build();
     return ExchangeUtils.createExchange(carList, searchParameters);
   }
 }

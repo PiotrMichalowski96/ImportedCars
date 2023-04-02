@@ -19,7 +19,11 @@ class SearchParamsToCepikParamsMappingProcessorTest {
   void shouldMapSearchParamsToCepikParams() {
     //given
     var searchFromDate = LocalDate.of(2021, 10, 31);
-    var searchParameters = new SearchParameters("mazowieckie", searchFromDate, List.of("Audi"));
+    var searchParameters = SearchParameters.builder()
+        .district("mazowieckie")
+        .searchFromDate(searchFromDate)
+        .carBrandList(List.of("Audi"))
+        .build();
     var expectedCepikRequestParams = new CepikRequestParams(14, "20211031");
 
     //when
