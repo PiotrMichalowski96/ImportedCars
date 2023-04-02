@@ -18,9 +18,9 @@ class SearchParamsToCepikParamsMappingProcessorTest {
   @Test
   void shouldMapSearchParamsToCepikParams() {
     //given
-    LocalDate searchFromDate = LocalDate.of(2021, 10, 31);
-    SearchParameters searchParameters = new SearchParameters("mazowieckie", searchFromDate, List.of("Audi"));
-    CepikRequestParams expectedCepikRequestParams = new CepikRequestParams(14, "20211031");
+    var searchFromDate = LocalDate.of(2021, 10, 31);
+    var searchParameters = new SearchParameters("mazowieckie", searchFromDate, List.of("Audi"));
+    var expectedCepikRequestParams = new CepikRequestParams(14, "20211031");
 
     //when
     CepikRequestParams actualCepikRequestParams = processor.process(searchParameters);

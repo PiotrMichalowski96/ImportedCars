@@ -10,23 +10,16 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Value;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+@Value
 public class SearchParameters {
-  @NotBlank
-  private String district;
+  @NotBlank String district;
   @JsonFormat(pattern ="yyyy-MM-dd")
   @JsonSerialize(using = LocalDateSerializer.class)
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @SearchFromDateConstraint
-  private LocalDate searchFromDate;
+  LocalDate searchFromDate;
   @NotEmpty
-  private List<@NotBlank String> carBrandList;
+  List<@NotBlank String> carBrandList;
 }

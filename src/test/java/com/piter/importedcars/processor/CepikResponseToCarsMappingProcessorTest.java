@@ -45,8 +45,8 @@ class CepikResponseToCarsMappingProcessorTest {
   @Test
   void shouldThrowExceptionIfCepikReponseWithEmptyCarList() {
     //given
-    JsonApiForListVehicle cepikResponse = new JsonApiForListVehicle();
-    String expectedErrorMessage = "Cepik respond with empty car list";
+    var cepikResponse = new JsonApiForListVehicle();
+    var expectedErrorMessage = "Cepik respond with empty car list";
 
     //whenThen
     assertThatThrownBy(() -> processor.process(List.of(cepikResponse)))

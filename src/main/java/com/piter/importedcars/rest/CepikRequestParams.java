@@ -1,14 +1,12 @@
 package com.piter.importedcars.rest;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
+@AllArgsConstructor
 public class CepikRequestParams {
   private int districtCode;
   private String cepikRequestDateFrom;

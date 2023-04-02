@@ -36,8 +36,8 @@ class RestInvocationProcessorTest {
   @Test
   void shouldInvokeCepikWebServiceAndGetOneResponse() throws IOException {
     //given
-    String cepikUrl = "cepikUrl";
-    CepikRequestParams cepikRequestParams = new CepikRequestParams(14, "20211015");
+    var cepikUrl = "cepikUrl";
+    var cepikRequestParams = new CepikRequestParams(14, "20211015");
 
     JsonApiForListVehicle responseWithNullLastLink = parseInputJsonFile("CepikResponse_1.json");
     responseWithNullLastLink.getLinks().setLast(null);
@@ -59,8 +59,8 @@ class RestInvocationProcessorTest {
   @Test
   void shouldInvokeCepikWebServiceAndGetTwoResponse() throws IOException {
     //given
-    String cepikUrl = "cepikUrl";
-    CepikRequestParams cepikRequestParams = new CepikRequestParams(14, "20211015");
+    var cepikUrl = "cepikUrl";
+    var cepikRequestParams = new CepikRequestParams(14, "20211015");
 
     JsonApiForListVehicle firstPageResponse = parseInputJsonFile("CepikResponse_1.json");
     firstPageResponse.getLinks().setLast("cepikUrl?page=2");

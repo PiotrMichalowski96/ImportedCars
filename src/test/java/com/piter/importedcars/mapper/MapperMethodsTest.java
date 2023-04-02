@@ -55,8 +55,8 @@ class MapperMethodsTest {
   @Test
   void shouldMapPolishDistrictNameToCode() {
     //given
-    String districtName = "mazowieckie";
-    int expectedCode = 14;
+    var districtName = "mazowieckie";
+    var expectedCode = 14;
 
     //when
     int actualCode = mapperMethods.districtCodeMapper(districtName);
@@ -68,7 +68,7 @@ class MapperMethodsTest {
   @Test
   void shouldThrowExceptionBecauseWrongPolishDistrictName() {
     //given
-    String invalidDistrictName = "AAA";
+    var invalidDistrictName = "AAA";
 
     //whenThen
     assertThatThrownBy(() -> mapperMethods.districtCodeMapper(invalidDistrictName))

@@ -20,7 +20,7 @@ class FilterCarsTest {
   void shouldCheckIfContainsSearchCarBrands(List<Car> carList, List<String> carBrandList,
       boolean expectedResult) {
     //given
-    SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
+    var searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
         carBrandList);
 
     Exchange exchange = createExchange(carList, searchParameters);
@@ -51,7 +51,7 @@ class FilterCarsTest {
   void shouldCheckIfCarHasSearchedBrand(Car car, List<String> carBrandList,
       boolean expectedResult) {
     //given
-    SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
+    var searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
         carBrandList);
 
     Exchange exchange = createExchange(car, searchParameters);
@@ -64,7 +64,7 @@ class FilterCarsTest {
   }
 
   private static Stream<Arguments> provideOneCarAndSearchCarBrandsList() {
-    Car car = new Car("Audi", "A4", LocalDate.now());
+    var car = new Car("Audi", "A4", LocalDate.now());
 
     return Stream.of(
         Arguments.of(car, List.of("Mercedes", "Audi"), true),
