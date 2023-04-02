@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.piter.importedcars.mapper.SearchParamsToCepikParamsMapperImpl;
 import com.piter.importedcars.model.SearchParameters;
-import com.piter.importedcars.rest.CepikRequestParams;
+import com.piter.importedcars.rest.model.CepikRequestParams;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;

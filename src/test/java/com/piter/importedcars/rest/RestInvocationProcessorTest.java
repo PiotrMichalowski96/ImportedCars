@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import com.piter.importedcars.rest.config.CepikWebserviceConfig;
+import com.piter.importedcars.rest.model.CepikRequestParams;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

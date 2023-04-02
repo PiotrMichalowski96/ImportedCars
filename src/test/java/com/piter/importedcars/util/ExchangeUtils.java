@@ -23,4 +23,11 @@ public class ExchangeUtils {
     exchange.setProperty(SettingSearchPropertiesProcessor.SEARCH_PROPERTIES, searchParameters);
     return exchange;
   }
+
+  public static <T extends Exception> Exchange createExchangeWithException(T exception) {
+    CamelContext camelContext = new DefaultCamelContext();
+    Exchange exchange = new DefaultExchange(camelContext);
+    exchange.setProperty(Exchange.EXCEPTION_CAUGHT, exception);
+    return exchange;
+  }
 }
