@@ -3,7 +3,7 @@ package com.piter.importedcars;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.piter.importedcars")
+@SpringBootApplication
 public class ImportedCarsApplication {
 
 	public static void main(String[] args) {
