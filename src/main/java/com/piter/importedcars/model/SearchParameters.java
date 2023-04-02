@@ -10,9 +10,13 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import lombok.Builder;
 import lombok.Value;
+import lombok.extern.jackson.Jacksonized;
 
 @Value
+@Builder
+@Jacksonized
 public class SearchParameters {
   @NotBlank String district;
   @JsonFormat(pattern ="yyyy-MM-dd")
