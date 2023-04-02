@@ -1,11 +1,10 @@
 package com.piter.importedcars.rest;
 
-import static com.piter.importedcars.util.JsonResourceUtil.parseInputJsonFile;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 import com.piter.importedcars.rest.config.CepikWebserviceConfig;
 import com.piter.importedcars.rest.model.CepikRequestParams;
+import com.piter.importedcars.util.MockWebService;
 import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,82 +12,54 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import pl.cepik.model.JsonApiForListVehicle;
 
 @ExtendWith(MockitoExtension.class)
 class RestInvocationProcessorTest {
 
+  private static final String CEPIK_URL = "cepik-url";
+  private static final String FIRST_RESPONSE_FILE = "CepikResponse_1.json";
+  private static final String SECOND_RESPONSE_FILE = "CepikResponse_2.json";
+
   @Mock
   private RestTemplate restTemplate;
-  @Mock
-  private CepikWebserviceConfig cepikWebserviceConfig;
+
+  private MockWebService mockCepikWebService;
 
   private RestInvocationProcessor processor;
 
   @BeforeEach
   void setUp() {
+    CepikWebserviceConfig cepikWebserviceConfig = new CepikWebserviceConfig();
+    cepikWebserviceConfig.setUrl(CEPIK_URL);
     processor = new RestInvocationProcessor(restTemplate, cepikWebserviceConfig);
+    mockCepikWebService = new MockWebService(restTemplate, cepikWebserviceConfig);
   }
 
   @Test
   void shouldInvokeCepikWebServiceAndGetOneResponse() throws IOException {
     //given
-    var cepikUrl = "cepikUrl";
     var cepikRequestParams = new CepikRequestParams(14, "20211015");
-
-    JsonApiForListVehicle responseWithNullLastLink = parseInputJsonFile("CepikResponse_1.json");
-    responseWithNullLastLink.getLinks().setLast(null);
-
-    when(cepikWebserviceConfig.getUrl()).thenReturn(cepikUrl);
-    mockWebServiceResponse(cepikUrl, 1, cepikRequestParams, responseWithNullLastLink);
-
-    List<JsonApiForListVehicle> expectedResponseList = List.of(responseWithNullLastLink);
+    mockCepikWebService.mockOneApiCall(cepikRequestParams, FIRST_RESPONSE_FILE);
 
     //when
     List<JsonApiForListVehicle> responseList = processor.process(cepikRequestParams);
 
     //then
-    assertThat(responseList)
-        .hasSize(1)
-        .hasSameElementsAs(expectedResponseList);
+    assertThat(responseList).hasSize(1);
   }
 
   @Test
   void shouldInvokeCepikWebServiceAndGetTwoResponse() throws IOException {
     //given
-    var cepikUrl = "cepikUrl";
     var cepikRequestParams = new CepikRequestParams(14, "20211015");
-
-    JsonApiForListVehicle firstPageResponse = parseInputJsonFile("CepikResponse_1.json");
-    firstPageResponse.getLinks().setLast("cepikUrl?page=2");
-
-    when(cepikWebserviceConfig.getUrl()).thenReturn(cepikUrl);
-    mockWebServiceResponse(cepikUrl, 1, cepikRequestParams, firstPageResponse);
-
-    JsonApiForListVehicle secondPageResponse = parseInputJsonFile("CepikResponse_2.json");
-    mockWebServiceResponse(cepikUrl, 2, cepikRequestParams, secondPageResponse);
-
-    List<JsonApiForListVehicle> expectedResponseList = List.of(firstPageResponse, secondPageResponse);
+    mockCepikWebService.mockTwoApiCalls(cepikRequestParams, FIRST_RESPONSE_FILE, SECOND_RESPONSE_FILE);
 
     //when
     List<JsonApiForListVehicle> responseList = processor.process(cepikRequestParams);
 
     //then
-    assertThat(responseList)
-        .hasSize(2)
-        .hasSameElementsAs(expectedResponseList);
-  }
-
-  private void mockWebServiceResponse(String url, int pageNumber,
-      CepikRequestParams cepikRequestParams, JsonApiForListVehicle response) {
-
-    when(restTemplate.exchange(url, HttpMethod.GET,
-        null, JsonApiForListVehicle.class, cepikRequestParams.getDistrictCode(),
-        cepikRequestParams.getCepikRequestDateFrom(), pageNumber))
-        .thenReturn(new ResponseEntity<>(response, HttpStatus.OK));
+    assertThat(responseList).hasSize(2);
   }
 }

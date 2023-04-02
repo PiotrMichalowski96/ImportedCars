@@ -1,6 +1,6 @@
 package com.piter.importedcars.processor;
 
-import static com.piter.importedcars.util.JsonResourceUtil.parseInputJsonFile;
+import static com.piter.importedcars.util.JsonResourceUtil.convertToObject;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,6 +17,9 @@ import pl.cepik.model.VehicleDto;
 
 class CepikResponseToCarsMappingProcessorTest {
 
+  private static final String FIRST_CEPIK_RESPONSE = "CepikResponse_1.json";
+  private static final String SECOND_CEPIK_RESPONSE = "CepikResponse_2.json";
+
   private final CepikResponseToCarsMappingProcessor processor = new CepikResponseToCarsMappingProcessor(
       new CepikResponseToCarMapperImpl()
   );
@@ -26,8 +29,8 @@ class CepikResponseToCarsMappingProcessorTest {
   @Test
   void shouldMapCepikResponseToCars() throws IOException {
     //given
-    JsonApiForListVehicle cepikResponse1 = parseInputJsonFile("CepikResponse_1.json");
-    JsonApiForListVehicle cepikResponse2 = parseInputJsonFile("CepikResponse_2.json");
+    JsonApiForListVehicle cepikResponse1 = convertToObject(JsonApiForListVehicle.class, FIRST_CEPIK_RESPONSE);
+    JsonApiForListVehicle cepikResponse2 = convertToObject(JsonApiForListVehicle.class, SECOND_CEPIK_RESPONSE);
     List<JsonApiForListVehicle> jsonApiForListVehicleList = List.of(cepikResponse1, cepikResponse2);
 
     //when
