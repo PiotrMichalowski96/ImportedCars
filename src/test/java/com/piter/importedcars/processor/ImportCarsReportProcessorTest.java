@@ -13,12 +13,12 @@ import java.util.List;
 import org.apache.camel.Exchange;
 import org.junit.jupiter.api.Test;
 
-public class ImportCarsReportProcessorTest {
+class ImportCarsReportProcessorTest {
 
   private final ImportCarsReportProcessor processor = new ImportCarsReportProcessor();
 
   @Test
-  public void shouldSetReportNameProperty() {
+  void shouldSetReportNameProperty() {
     //given
     List<Car> carList = List.of(
         new Car("Audi", "A5", LocalDate.now()),
@@ -39,7 +39,7 @@ public class ImportCarsReportProcessorTest {
   }
 
   @Test
-  public void shouldThrowExceptionBecauseCarListIsEmpty() {
+  void shouldThrowExceptionBecauseCarListIsEmpty() {
     //given
     List<Car> carList = Collections.emptyList();
 
@@ -54,7 +54,7 @@ public class ImportCarsReportProcessorTest {
   }
 
   @Test
-  public void shouldThrowExceptionBecauseCarListContainsDifferentCarBrands() {
+  void shouldThrowExceptionBecauseCarListContainsDifferentCarBrands() {
     //given
     List<Car> carList = List.of(
         new Car("Audi", "A5", LocalDate.now()),

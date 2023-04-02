@@ -2,7 +2,7 @@ package com.piter.importedcars.processor;
 
 import static com.piter.importedcars.util.JsonResourceUtil.parseInputJsonFile;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.piter.importedcars.exception.CepikResponseException;
 import com.piter.importedcars.mapper.CepikResponseToCarMapperImpl;
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import pl.cepik.model.JsonApiForListVehicle;
 import pl.cepik.model.VehicleDto;
 
-public class CepikResponseToCarsMappingProcessorTest {
+class CepikResponseToCarsMappingProcessorTest {
 
   private final CepikResponseToCarsMappingProcessor processor = new CepikResponseToCarsMappingProcessor(
       new CepikResponseToCarMapperImpl()
@@ -24,7 +24,7 @@ public class CepikResponseToCarsMappingProcessorTest {
   private final MapperMethods mapperMethods = new MapperMethods() {};
 
   @Test
-  public void shouldMapCepikResponseToCars() throws IOException {
+  void shouldMapCepikResponseToCars() throws IOException {
     //given
     JsonApiForListVehicle cepikResponse1 = parseInputJsonFile("CepikResponse_1.json");
     JsonApiForListVehicle cepikResponse2 = parseInputJsonFile("CepikResponse_2.json");
@@ -43,13 +43,13 @@ public class CepikResponseToCarsMappingProcessorTest {
   }
 
   @Test
-  public void shouldThrowExceptionIfCepikReponseWithEmptyCarList() {
+  void shouldThrowExceptionIfCepikReponseWithEmptyCarList() {
     //given
     JsonApiForListVehicle cepikResponse = new JsonApiForListVehicle();
     String expectedErrorMessage = "Cepik respond with empty car list";
 
     //whenThen
-    assertThatCode(() -> processor.process(List.of(cepikResponse)))
+    assertThatThrownBy(() -> processor.process(List.of(cepikResponse)))
         .isInstanceOf(CepikResponseException.class)
         .hasMessage(expectedErrorMessage);
   }

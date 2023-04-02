@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import pl.cepik.model.JsonApiForListVehicle;
 
 @ExtendWith(MockitoExtension.class)
-public class RestInvocationProcessorTest {
+class RestInvocationProcessorTest {
 
   @Mock
   private RestTemplate restTemplate;
@@ -29,12 +29,12 @@ public class RestInvocationProcessorTest {
   private RestInvocationProcessor processor;
 
   @BeforeEach
-  public void setUp() {
+  void setUp() {
     processor = new RestInvocationProcessor(restTemplate, cepikWebserviceConfig);
   }
 
   @Test
-  public void shouldInvokeCepikWebServiceAndGetOneResponse() throws IOException {
+  void shouldInvokeCepikWebServiceAndGetOneResponse() throws IOException {
     //given
     String cepikUrl = "cepikUrl";
     CepikRequestParams cepikRequestParams = new CepikRequestParams(14, "20211015");
@@ -51,12 +51,13 @@ public class RestInvocationProcessorTest {
     List<JsonApiForListVehicle> responseList = processor.process(cepikRequestParams);
 
     //then
-    assertThat(responseList).hasSize(1);
-    assertThat(responseList).hasSameElementsAs(expectedResponseList);
+    assertThat(responseList)
+        .hasSize(1)
+        .hasSameElementsAs(expectedResponseList);
   }
 
   @Test
-  public void shouldInvokeCepikWebServiceAndGetTwoResponse() throws IOException {
+  void shouldInvokeCepikWebServiceAndGetTwoResponse() throws IOException {
     //given
     String cepikUrl = "cepikUrl";
     CepikRequestParams cepikRequestParams = new CepikRequestParams(14, "20211015");
@@ -76,8 +77,9 @@ public class RestInvocationProcessorTest {
     List<JsonApiForListVehicle> responseList = processor.process(cepikRequestParams);
 
     //then
-    assertThat(responseList).hasSize(2);
-    assertThat(responseList).hasSameElementsAs(expectedResponseList);
+    assertThat(responseList)
+        .hasSize(2)
+        .hasSameElementsAs(expectedResponseList);
   }
 
   private void mockWebServiceResponse(String url, int pageNumber,

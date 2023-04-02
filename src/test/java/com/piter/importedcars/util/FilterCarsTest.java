@@ -13,11 +13,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class FilterCarsTest {
+class FilterCarsTest {
 
   @ParameterizedTest
   @MethodSource("provideCarsAndSearchCarBrandsList")
-  public void shouldCheckIfContainsSearchCarBrands(List<Car> carList, List<String> carBrandList,
+  void shouldCheckIfContainsSearchCarBrands(List<Car> carList, List<String> carBrandList,
       boolean expectedResult) {
     //given
     SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),
@@ -48,7 +48,7 @@ public class FilterCarsTest {
 
   @ParameterizedTest
   @MethodSource("provideOneCarAndSearchCarBrandsList")
-  public void shouldCheckIfCarHasSearchedBrand(Car car, List<String> carBrandList,
+  void shouldCheckIfCarHasSearchedBrand(Car car, List<String> carBrandList,
       boolean expectedResult) {
     //given
     SearchParameters searchParameters = new SearchParameters("podlaskie", LocalDate.now(),

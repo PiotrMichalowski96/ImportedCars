@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ImportCarsReportProcessor {
 
-  public static final String REPORT_NAME = "reportName";
+  static final String REPORT_NAME = "reportName";
 
   @Handler
   public ImportedCarsReport process(Exchange exchange) {
@@ -47,12 +47,15 @@ public class ImportCarsReportProcessor {
   }
 
   private void sanityCheckForCarBrand(List<Car> carList, String carBrand) {
+    if (carList == null) {
+      return;
+    }
     carList.stream()
         .map(Car::getBrand)
         .filter(brand -> !StringUtils.equals(brand, carBrand))
         .findAny()
         .ifPresent(brand -> {
-          String errorMessage = String.format("Contains different car brands %s and %s", brand, carBrand);
+          var errorMessage = String.format("Contains different car brands %s and %s", brand, carBrand);
           throw new CarReportException(errorMessage);
         });
   }

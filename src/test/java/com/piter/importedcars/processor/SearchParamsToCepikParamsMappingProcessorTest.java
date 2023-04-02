@@ -9,14 +9,14 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class SearchParamsToCepikParamsMappingProcessorTest {
+class SearchParamsToCepikParamsMappingProcessorTest {
 
   private final SearchParamsToCepikParamsMappingProcessor processor = new SearchParamsToCepikParamsMappingProcessor(
       new SearchParamsToCepikParamsMapperImpl()
   );
 
   @Test
-  public void shouldMapSearchParamsToCepikParams() {
+  void shouldMapSearchParamsToCepikParams() {
     //given
     LocalDate searchFromDate = LocalDate.of(2021, 10, 31);
     SearchParameters searchParameters = new SearchParameters("mazowieckie", searchFromDate, List.of("Audi"));
