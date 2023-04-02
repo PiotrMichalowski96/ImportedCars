@@ -25,7 +25,7 @@ class ErrorHandlingRouteTest {
   private MockEndpoint mockEndpoint;
 
   @Test
-  public void shouldHandleError() throws InterruptedException, JsonProcessingException {
+  void shouldHandleError() throws InterruptedException, JsonProcessingException {
     //given
     var message = "Car report contains error";
     var exception = new CarReportException(message);
